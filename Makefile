@@ -4,19 +4,19 @@ PREFIX ?= /usr
 BINDIR ?= $(PREFIX)/bin
 CC ?= gcc
 
-all: vswm
+all: emberwm
 
-vswm: vswm.o
+emberwm: emberwm.o
 	$(CC) -o $@ $^ $(LIBS) $(LDFLAGS)
 
 install: all
 	install -d $(DESTDIR)$(BINDIR)
-	install -m 755 vswm $(DESTDIR)$(BINDIR)
+	install -m 755 emberwm $(DESTDIR)$(BINDIR)
 
 uninstall:
-	rm -f $(DESTDIR)$(BINDIR)/vswm
+	rm -f $(DESTDIR)$(BINDIR)/emberwm
 
 clean:
-	rm -f vswm *.o
+	rm -f emberwm *.o
 
 .PHONY: all install uninstall clean
