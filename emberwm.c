@@ -35,22 +35,14 @@ static int ignore(Display *display, XErrorEvent *event);
 
 static Display *display;
 static Window root;
-static int screen, width, height;
+static int screen, width, height, oldwidth, oldheight;
 
 static Key keys[] = {
-	{ Mod4Mask, XK_Return, launch, "xterm" },
-	{ Mod4Mask, XK_d, launch, "dmn" },
-	{ Mod4Mask, XK_b, launch, "firefox" },
-	{ Mod4Mask, XK_p, launch, "scr" },
-	{ Mod4Mask | ShiftMask, XK_q, destroy, 0 },
-	{ Mod4Mask | ShiftMask, XK_r, refresh, 0 },
-	{ Mod4Mask, XK_Tab, focus, "next" },
-	{ Mod4Mask | ShiftMask, XK_Tab, focus, "prev" },
-	{ 0, XF86XK_AudioMute, launch, "pamixer -t" },
-	{ 0, XF86XK_AudioLowerVolume, launch, "pamixer -d 5" },
-	{ 0, XF86XK_AudioRaiseVolume, launch, "pamixer -i 5" },
-	{ 0, XF86XK_MonBrightnessDown, launch, "xbacklight -dec 5" },
-	{ 0, XF86XK_MonBrightnessUp, launch, "xbacklight -inc 5" },
+	{ Mod1Mask, XK_Return, launch, "st" },
+	{ Mod1Mask, XK_q, destroy, 0 },
+	{ Mod1Mask | ShiftMask, XK_r, refresh, 0 },
+	{ Mod1Mask, XK_Tab, focus, "next" },
+	{ Mod1Mask | ShiftMask, XK_Tab, focus, "prev" }
 };
 
 static const Events events[LASTEvent] = {
@@ -100,9 +92,16 @@ void loop(void)
 {
 	XEvent event;
 
-	while (1 && !XNextEvent(display, &event))
+	while (!XNextEvent(display, &event)) {
 		if (events[event.type])
 			events[event.type](&event);
+		size();
+		if (width != oldwidth || height != oldheight) {
+			oldwidth = width;
+			oldheight = height;
+			scan();
+		}
+	}
 }
 
 void enter(XEvent *event)
@@ -218,6 +217,8 @@ int main(void)
 	XDefineCursor(display, root, XCreateFontCursor(display, 68));
 
 	size();
+	oldwidth = width;
+	oldheight = height;
 	grab();
 	scan();
 	loop();
