@@ -162,18 +162,11 @@ void launch(XEvent *event, char *command)
 	(void)event;
 
 	if (fork() == 0) {
-		if (fork() == 0) {
-			if (display)
-				close(XConnectionNumber(display));
-
-			setsid();
-			execl("/bin/sh", "sh", "-c", command, 0);
-
-			exit(1);
-		}
-		else {
-			exit(0);
-		}
+		if (display)
+			close(XConnectionNumber(display));
+		setsid();
+		execl("/bin/sh", "sh", "-c", command, 0);
+		exit(1);
 	}
 }
 
