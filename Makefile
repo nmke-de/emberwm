@@ -12,6 +12,7 @@ emberwm: emberwm.o
 install: all
 	install -d $(DESTDIR)$(BINDIR)
 	install -m 755 emberwm $(DESTDIR)$(BINDIR)
+	install -m 755 ember $(DESTDIR)$(BINDIR)
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/emberwm
