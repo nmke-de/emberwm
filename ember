@@ -1,0 +1,17 @@
+#!/bin/sh
+
+PROG=${1:-st}
+
+d=0
+while true; do
+	[ -e "/tmp/.X$d-lock" -o -S "/tmp/.X11-unix/X$d" ] || break
+	d=$(($d + 1))
+done
+
+echo "#!/bin/sh
+$PROG &
+exec emberwm 
+" > "/tmp/.X$d-init"
+
+export XINITRC="/tmp/.X$d-init"
+exec xinit -- /usr/bin/Xwayland ":$d"
