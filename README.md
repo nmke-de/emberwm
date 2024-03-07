@@ -1,62 +1,65 @@
-vswm - very stupid window manager
-=================================
+# emberwm
 
-Probably the most stupid window manager ever created, written over an ancient
-relic of a library called Xlib -- a library so old that it preceded the birth
-of planet Earth itself.
+A fork of [vswm](https://github.com/fehawen/vswm) with the intended purpose of usage within rootful Xwayland.
 
-- There are no workspaces.
-- All windows are maximised.
-- Windows can not be moved or resized.
-- Only one window is visible at a time.
-- This certainly isn't for everyone.
+About vswm:
 
-Screenshot: https://www.reddit.com/r/unixporn/comments/pbf4wu/vswm_hello_friend/
+> Probably the most stupid window manager ever created, written over an ancient
+> relic of a library called Xlib -- a library so old that it preceded the birth
+> of planet Earth itself.
+> 
+> - There are no workspaces.
+> - All windows are maximised.
+> - Windows can not be moved or resized.
+> - Only one window is visible at a time.
+> - This certainly isn't for everyone.
+> 
+> Screenshot: https://www.reddit.com/r/unixporn/comments/pbf4wu/vswm_hello_friend/
 
+## But why?
 
-Keybindings
------------
+Wayland desktops are becoming more usable by the day. However, a lot of otherwise very usable and interesting Wayland Compositors available do not support *rootless* XWayland, meaning, without any further complications, you can not start a graphical program without Wayland support.
 
-MOD4 + Tab               focus next window
-MOD4 + Shift + Tab       focus prev window
-MOD4 + Shift + q         kill window
-MOD4 + Shift + r         refresh wm [*]
+Fortunately, these compositors can run *rootful* XWayland, which is essentially just a normal window that is a Xorg-display for legacy GUI programs. This is one of the recommended ways for the [Niri-Compositor](https://github.com/YaLTeR/niri) to [run Xorg programs](https://github.com/YaLTeR/niri/wiki/Xwayland). This is unproblematic if you are okay not resizing your window and creating new instances of XWayland everytime you run a new instance of Xorg programs. Emberwm is supposed to make this process a little more comfortable though. 
 
-MOD4 + b                 firefox
-MOD4 + Return            xterm
-MOD4 + d                 dmn [1]
-MOD4 + p                 scr [2]
+## Usage
 
-XF86_MonBrightnessDown   xbacklight -dec 5
-XF86_MonBrightnessUp     xbacklight -inc 5
-XF86_AudioLowerVolume    pamixer -d 5
-XF86_AudioRaiseVolume    pamixer -i 5
-XF86_AudioMute           pamixer -t
+After configuration and installation, run
 
-[*] Resize and reposition windows. Useful when connecting or disconnecting an
-    external monitor, if e.g. screen size differ.
+```bash
+ember <your program> [arguments ...]
+```
 
-[1] Launcher script for dmenu:
-    https://github.com/fehawen/bin/blob/master/scripts/dmn
+or just
 
-[2] Screenshot script:
-    https://github.com/fehawen/bin/blob/master/scripts/scr
+```bash
+ember
+```
 
+to get started.
 
-Configuration
--------------
+### Keybindings
 
-Modify the keybindings to your liking.
+```
+MOD1 + Tab               focus next window
+MOD1 + Shift + Tab       focus prev window
+MOD1 + q                 kill window
+MOD1 + Shift + r         refresh wm [*]
+MOD1 + Return            st
+```
 
+[*] Resize and reposition windows. Useful when resizing XWayland.
 
-Dependencies
-------------
+## Configuration
+
+Modify the keybindings to your liking by editing `emberwm.c`.
+
+## Dependencies
 
 You need the Xlib header files.
 
 
-Installation
-------------
+## Installation
 
 Clean.
 
@@ -82,12 +85,15 @@ You may need to run install as root.
 DESTDIR and PREFIX are supported.
 
 
-Credits
--------
+## Credits
 
-i3: https://github.com/i3/i3
-dwm: https://git.suckless.org/dwm
-sowm: https://github.com/dylanaraps/sowm
-berry: https://github.com/JLErvin/berry
-tinywm: http://incise.org/tinywm.html
-katriawm: https://www.uninformativ.de/git/katriawm
+vswm: https://github.com/fehawen/vswm
+niri: https://github.com/YaLTeR/niri
+
+For vswm:
+> i3: https://github.com/i3/i3
+> dwm: https://git.suckless.org/dwm
+> sowm: https://github.com/dylanaraps/sowm
+> berry: https://github.com/JLErvin/berry
+> tinywm: http://incise.org/tinywm.html
+> katriawm: https://www.uninformativ.de/git/katriawm
