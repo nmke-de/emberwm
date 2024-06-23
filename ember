@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PROG=${1:-st}
+PROG=${@:-st}
 
 d=0
 while true; do
